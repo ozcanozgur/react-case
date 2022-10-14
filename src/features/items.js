@@ -36,7 +36,7 @@ export default itemSlice.reducer;
 
 // set up axios - simple json-server prototype config here
 const api = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: "https://getir-fake-server-app.herokuapp.com/",
     withCredentials: false,
     headers: {
         Accept: "application/json",
