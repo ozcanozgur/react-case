@@ -1,0 +1,67 @@
+.ProductBox {
+    height: 225px;
+    width: 124px;
+}
+
+.ImageBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 124px;
+    width: 124px;
+    border: 1.17666px solid #F3F0FE;
+    border-radius: 12px;
+}
+
+.InnerImageBox {
+    height: 92px;
+    width: 92px;
+    background-color: #C4C4C4;
+}
+
+.Salary {
+    margin-top: 8px;
+    width: 124px;
+    color: #1ea3ce;
+    font-size: 14px;
+    font-family: Helvetica;
+    line-height: 20px;
+    white-space: pre-wrap;
+}
+
+.Price {
+    display: contents;
+    color: #1ea3ce;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Open Sans';
+    line-height: 20px;
+}
+
+.Title {
+    width: 124px;
+    height: 40px;
+    margin: 0px 0px 8px 0px;
+    color: #191919;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Open Sans';
+    line-height: 20px;
+}
+
+.AddButton {
+    width: 23px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1px 50px 1px 51px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Open Sans;
+    line-height: 20px;
+    white-space: nowrap;
+    border-radius: 2px;
+    background-color: #1ea3ce;
+}

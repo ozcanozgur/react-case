@@ -1,0 +1,33 @@
+.ProductContainer {
+    height: 100%;
+    width: 700px;
+    margin: 0 10px 0 10px;
+
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    color: #6F6F6F;
+}
+
+.TagContainer {
+    display: flex;
+    gap: 8px;
+}
+
+.ProductContentContainer {
+    display: flex;
+    box-sizing: border-box;
+    align-content: flex-start;
+    padding: 24px;
+    margin-top: 16px;
+    height: 1096px;
+    width: 100%;
+    background-color: #FFFFFF;
+    flex-wrap: wrap;
+    gap: 12px;
+    row-gap: 20px;
+    border-radius: 2px;
+
+}
