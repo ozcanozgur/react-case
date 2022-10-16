@@ -1,55 +1,52 @@
 import React, { useState } from 'react'
-import './Brands.css'
+import './Tags.css'
 
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectedBrands, itemsSelector } from "../../features/items";
+import { useSelector, useDispatch } from "react-redux";
+import { itemsSelector, setSelectedTags } from "../../features/items";
 
-function Brands() {
+function Tags() {
 
     const dispatch = useDispatch();
 
-    const { brands, selectedBrands } = useSelector(itemsSelector);
+    const { tags, selectedTags } = useSelector(itemsSelector);
 
     const [inputValue, setInputValue] = useState("");
 
-
     const _onChange = (item, index) => {
-        const findIdx = selectedBrands.indexOf(item);
-        console.log(index, item)
+        const findIdx = selectedTags.indexOf(item);
         if (findIdx > -1) {
-            dispatch(setSelectedBrands(selectedBrands.filter(a => a !== item)));
+            dispatch(setSelectedTags(selectedTags.filter(a => a !== item)))
         }
         else if (index == 0) {
-            dispatch(setSelectedBrands([item]));
+            dispatch(setSelectedTags([item]));
         }
         else {
-            dispatch(setSelectedBrands([...selectedBrands, item]))
+            dispatch(setSelectedTags([...selectedTags, item]))
         }
     }
 
     const checkBoxes = () => {
-        return Object.keys(brands).filter(brand => brand === '' || brand.includes(inputValue))
+        return Object.keys(tags).filter(tag => tag === '' || tag.includes(inputValue))
             .map((item, index) => (
                 <div className='checkbox-wrapper' key={item}>
                     <label>
-                        <input type="checkbox" checked={selectedBrands.includes(item)} onChange={() => _onChange(item, index)} />
-                        <span>{item} ({brands[item]})</span>
+                        <input type="checkbox" checked={selectedTags.includes(item)} onChange={() => _onChange(item, index)} />
+                        <span>{item} ({tags[item]})</span>
                     </label>
                 </div>
             ))
     }
 
-
     return (
-        <div className="BrandsContainer">
-            <p>Brands</p>
-            <div className='BrandsBox'>
+        <div className="TagsContainer">
+            <p>Tags</p>
+            <div className='TagsBox'>
                 <div className="search">
                     <input
                         type="text"
                         className='SearchInput'
+                        placeholder='Search Tag'
                         value={inputValue}
-                        placeholder="Search brand"
                         onChange={(e) => setInputValue(e.target.value)}
                     />
                 </div>
@@ -61,4 +58,4 @@ function Brands() {
     )
 }
 
-export default Brands;
+export default Tags;

@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 import './Sorting.css'
 
+import { useDispatch, useSelector } from "react-redux";
+import { setSorting, itemsSelector } from "../../features/items";
+
 function Sorting() {
 
-    const [selectedOption, setSelectedOption] = useState("option1");
+    const dispatch = useDispatch();
+    const { sortingBy } = useSelector(itemsSelector);
+
+    const setSelectedOption = (e) => {
+        dispatch(setSorting(e))
+    }
 
     return (
         <div className="SortingContainer">
@@ -12,32 +20,32 @@ function Sorting() {
                 <form>
                     <div className="Radio">
                         <label>
-                            <input type="radio" value="option1"
-                                checked={selectedOption === 'option1'}
+                            <input type="radio" value="priceLowToHigh"
+                                checked={sortingBy === 'priceLowToHigh'}
                                 onChange={(e) => setSelectedOption(e.target.value)} />
                             Price Low to high
                         </label>
                     </div>
                     <div className="Radio">
                         <label>
-                            <input type="radio" value="option2"
-                                checked={selectedOption === 'option2'}
+                            <input type="radio" value="priceHighToLow"
+                                checked={sortingBy === 'priceHighToLow'}
                                 onChange={(e) => setSelectedOption(e.target.value)} />
                             Price high to low
                         </label>
                     </div>
                     <div className="Radio">
                         <label>
-                            <input type="radio" value="option3"
-                                checked={selectedOption === 'option3'}
+                            <input type="radio" value="newToOld"
+                                checked={sortingBy === 'newToOld'}
                                 onChange={(e) => setSelectedOption(e.target.value)} />
                             New to old
                         </label>
                     </div>
                     <div className="Radio">
                         <label>
-                            <input type="radio" value="option4"
-                                checked={selectedOption === 'option4'}
+                            <input type="radio" value="oldToNow"
+                                checked={sortingBy === 'oldToNow'}
                                 onChange={(e) => setSelectedOption(e.target.value)} />
                             Old to new
                         </label>

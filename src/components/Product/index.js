@@ -1,8 +1,15 @@
 import React from 'react'
 import './Product.css'
 
+import { useDispatch } from "react-redux";
+import { addBasket } from "../../features/items";
+
+
 function Product(props) {
-    const { name, id, price } = props;
+    const { item } = props;
+
+    const dispatch = useDispatch();
+
     return (
         <div className="ProductBox">
             <div className='ImageBox'>
@@ -10,10 +17,10 @@ function Product(props) {
                 </div>
             </div>
             <div className='Salary'>
-                ₺ <div className='Price'>{price}</div>
+                ₺ <div className='Price'>{item.price}</div>
             </div>
-            <div className='Title'> {name}</div>
-            <div className='AddButton'>Add</div>
+            <div className='Title'> {item.name}</div>
+            <div className='Add'><button onClick={() => dispatch(addBasket(item))} > Add </button></div>
         </div>
     )
 }

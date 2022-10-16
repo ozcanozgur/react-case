@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import './Pagination.css'
-
 class Pagination extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +14,6 @@ class Pagination extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount")
         this.setState({
             totalRecords: this.props.totalRecords,
             pageLimit: this.props.pageLimit || 10,
@@ -26,8 +24,6 @@ class Pagination extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps")
-        console.log("nextProps", nextProps)
         this.setState({
             totalRecords: nextProps.totalRecords,
             pageLimit: nextProps.pageLimit || 10,
@@ -37,8 +33,6 @@ class Pagination extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate")
-        console.log("prevState", prevState)
         if (
             this.state.totalRecords !== prevState.totalRecords ||
             this.state.pageLimit !== prevState.pageLimit

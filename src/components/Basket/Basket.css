@@ -1,8 +1,101 @@
-.Box {
-    box-sizing: border-box;
+.BasketContainer {
     width: 296px;
-    height: 500px;
+    max-height: 500px;
+    overflow-y: auto;
     border: solid #1EA4CE 10px;
-    padding: 5px;
+    padding: 20px;
     background-color: white;
+}
+
+.BasketItem {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+}
+
+.ItemInfo {
+    height: 50px;
+    width: 100px;
+}
+
+.ItemCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 74px;
+    height: 32px;
+}
+
+.ItemCounter button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    width: 50px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.ItemCounter div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1EA4CE;
+    height: 32px;
+    width: 100%;
+    color: white;
+}
+
+.ItemName {
+    display: inline-block;
+    width: 114px;
+    height: 18.4px;
+    align-self: stretch;
+    color: #191919;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    font-weight: 400;
+}
+
+.ItemPrice {
+    width: 45px;
+    height: 18.4px;
+    color: #1ea3ce;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Open Sans;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    margin-top: 4px;
+}
+
+.Seperator {
+    margin-top: 18px;
+    border-top: 1px solid #F4F4F4;
+    margin-bottom: 18px;
+}
+
+.TotalPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.TotalPrice div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 92px;
+    height: 51px;
+    border: solid;
+    border-color: #1ea3ce;
+    background-color: #ffffff;
 }

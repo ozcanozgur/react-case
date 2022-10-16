@@ -7,7 +7,7 @@ import ProductConteiner from './ProductConteiner';
 import Pagination from '../../components/Pagination';
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchItems, itemsSelector } from "../../features/items";
+import { fetchBrands, fetchItems, itemsSelector } from "../../features/items";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -30,12 +30,15 @@ function App() {
         endIndex: ""
     })
     const dispatch = useDispatch();
-    const { loading, error, items } = useSelector(itemsSelector);
+    const { loading, error, items, sortingBy, selectedTags, selectedBrands } = useSelector(itemsSelector);
 
     useEffect(() => {
-        dispatch(fetchItems());
+        dispatch(fetchItems(sortingBy, selectedTags, selectedBrands));
+    }, [dispatch, sortingBy, selectedTags, selectedBrands]);
 
-    }, [dispatch]);
+    /* useEffect(() => {
+        dispatch(fetchBrands());
+    }, []); */
 
     const onChangePage = (data) => {
         setPaginationInfo({

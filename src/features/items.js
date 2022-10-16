@@ -5,6 +5,14 @@ export const initialState = {
     loading: false,
     error: false,
     items: [],
+    sortingBy: "priceLowToHigh",
+    brands: [],
+    tags: [],
+    selectedTags: ["All"],
+    selectedBrands: ["All"],
+    allItemLength: 0,
+    basketItems: [],
+    totalPrice: 0
 };
 
 const itemSlice = createSlice({
@@ -18,23 +26,120 @@ const itemSlice = createSlice({
             state.loading = false;
             state.error = false;
             state.items = payload;
+            let tags, brands, brand;
+
+            if (state.tags.length == 0 & state.brands.length == 0) {
+                state.allItemLength = payload.length
+
+                tags = { "All": state.allItemLength };
+                brands = { "All": state.allItemLength };
+
+                payload.map((item) => {
+                    item.tags.map((tag) => {
+                        if (!tags[tag]) {
+                            tags[tag] = 1;
+                        }
+                        else {
+                            tags[tag] = tags[tag] + 1;
+                        }
+                    })
+
+                    brand = item.manufacturer;
+
+                    if (!brands[brand]) {
+                        brands[brand] = 1;
+                    }
+                    else {
+                        brands[brand] = brands[brand] + 1;
+                    }
+
+                })
+                state.tags = tags;
+                state.brands = brands;
+            }
+            else {
+                state.allItemLength = payload.length
+
+                tags = { "All": state.allItemLength };
+
+                payload.map((item) => {
+                    item.tags.map((tag) => {
+                        if (!tags[tag]) {
+                            tags[tag] = 1;
+                        }
+                        else {
+                            tags[tag] = tags[tag] + 1;
+                        }
+                    })
+                })
+                state.tags = tags;
+            }
         },
         setError: (state) => {
             state.error = true;
         },
+        setSorting: (state, { payload }) => {
+            state.sortingBy = payload;
+        },
+        setSelectedTags: (state, { payload }) => {
+            if (payload.includes("All") && payload.length > 1) {
+                payload.splice(payload.indexOf("All"), 1);
+            }
+            state.selectedTags = payload
+        },
+        setSelectedBrands: (state, { payload }) => {
+            if (payload.includes("All") && payload.length > 1) {
+                payload.splice(payload.indexOf("All"), 1);
+            }
+            state.selectedBrands = payload
+        },
+        addBasket: (state, { payload }) => {
+            let isAdded = false;
+
+            state.basketItems.forEach((item) => {
+                if (item.added == payload.added) {
+                    item.qty++;
+                    isAdded = true;
+                }
+            })
+
+            if (!isAdded) {
+                let newItem = {
+                    "added": payload.added,
+                    "name": payload.name,
+                    "price": payload.price,
+                    "qty": 1,
+                }
+                state.basketItems.push(newItem)
+            }
+
+            state.totalPrice += payload.price
+        },
+        removeBasket: (state, { payload }) => {
+            state.basketItems.forEach((item, index) => {
+                console.log(index)
+                if (item.added == payload.added) {
+                    if (item.qty > 1) {
+                        item.qty--;
+
+                    }
+                    else {
+                        state.basketItems.splice(index, 1)
+                    }
+
+                    state.totalPrice = Math.abs(state.totalPrice - payload.price)
+                }
+            })
+        }
     },
 });
 
-// export the actions
-export const { setLoading, setItems, setError } = itemSlice.actions;
+export const { setLoading, setItems, setError, setSorting, setBrands, setSelectedBrands, setSelectedTags, addBasket, removeBasket } = itemSlice.actions;
 
-// export the selector (".items" being same as in slices/index.js's "items: something")
 export const itemsSelector = (state) => state.items;
 
-// export the default reducer
 export default itemSlice.reducer;
 
-// set up axios - simple json-server prototype config here
 const api = axios.create({
     baseURL: "https://getir-fake-server-app.herokuapp.com/",
     withCredentials: false,
@@ -44,11 +149,45 @@ const api = axios.create({
     },
 });
 
-// fetch all items
-export function fetchItems() {
+export function fetchItems(sortingBy, selectedTags, selectedBrands) {
+    let order, sort, tags, brands;
+
+    switch (sortingBy) {
+        case "priceLowToHigh":
+            sort = "price";
+            order = "asc"
+            break;
+        case "priceHighToLow":
+            sort = "price";
+            order = "desc"
+            break;
+        case "newToOld":
+            sort = "added";
+            order = "desc"
+            break;
+        case "oldToNow":
+            sort = "added";
+            order = "asc"
+            break;
+    }
+
+    let url = 'https://getir-fake-server-app.herokuapp.com/' + `items?_sort=${sort}&_order=${order}`;
+
+    if (selectedBrands[0] !== "All") {
+        tags = "&manufacturer_like="
+        url += tags + selectedBrands.join("&manufacturer_like=")
+    }
+
+    if (selectedTags[0] !== "All") {
+        brands = "&tags_like="
+        url += brands + selectedTags.join(",")
+    }
+
+    console.log(url)
     return async (dispatch) => {
+        dispatch(setLoading());
         api
-            .get("/items")
+            .get(url)
             .then((response) => {
                 dispatch(setItems(response.data));
             })
