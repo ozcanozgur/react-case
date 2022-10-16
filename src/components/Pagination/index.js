@@ -104,7 +104,7 @@ class Pagination extends Component {
         var pager = this.getPager();
 
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', width: '535px' }}>
+            <div >
                 <ul className="pagination">
                     <li>
                         <button

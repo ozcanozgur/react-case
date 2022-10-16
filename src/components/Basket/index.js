@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Basket.css'
 import plus from '../../images/plus.svg';
 import minus from '../../images/minus.svg';

@@ -12,7 +12,8 @@ export const initialState = {
     selectedBrands: ["All"],
     allItemLength: 0,
     basketItems: [],
-    totalPrice: 0
+    totalPrice: 0,
+    activeItemType: "mug"
 };
 
 const itemSlice = createSlice({
@@ -52,15 +53,18 @@ const itemSlice = createSlice({
                     else {
                         brands[brand] = brands[brand] + 1;
                     }
-
                 })
                 state.tags = tags;
                 state.brands = brands;
             }
             else {
-                state.allItemLength = payload.length
+                let allTagCount = 0;
 
-                tags = { "All": state.allItemLength };
+                state.selectedBrands.forEach((brand) => {
+                    allTagCount += state.brands[brand]
+                })
+
+                tags = { "All": allTagCount };
 
                 payload.map((item) => {
                     item.tags.map((tag) => {
@@ -130,11 +134,14 @@ const itemSlice = createSlice({
                     state.totalPrice = Math.abs(state.totalPrice - payload.price)
                 }
             })
-        }
+        },
+        setActiveItemType: (state, { payload }) => {
+            state.activeItemType = payload;
+        },
     },
 });
 
-export const { setLoading, setItems, setError, setSorting, setBrands, setSelectedBrands, setSelectedTags, addBasket, removeBasket } = itemSlice.actions;
+export const { setLoading, setItems, setError, setSorting, setBrands, setSelectedBrands, setSelectedTags, addBasket, removeBasket, setActiveItemType } = itemSlice.actions;
 
 export const itemsSelector = (state) => state.items;
 
@@ -149,7 +156,7 @@ const api = axios.create({
     },
 });
 
-export function fetchItems(sortingBy, selectedTags, selectedBrands) {
+export function fetchItems(sortingBy, selectedTags, selectedBrands, activeItemType) {
     let order, sort, tags, brands;
 
     switch (sortingBy) {
@@ -171,7 +178,7 @@ export function fetchItems(sortingBy, selectedTags, selectedBrands) {
             break;
     }
 
-    let url = 'https://getir-fake-server-app.herokuapp.com/' + `items?_sort=${sort}&_order=${order}`;
+    let url = 'https://getir-fake-server-app.herokuapp.com/' + `items?_sort=${sort}&_order=${order}&itemType=${activeItemType}`;
 
     if (selectedBrands[0] !== "All") {
         tags = "&manufacturer_like="

@@ -1,11 +1,22 @@
 import React from 'react'
 import Product from '../../../components/Product';
-import Tag from '../../../components/Tag';
+import ItemType from '../../../components/ItemType';
 import './ProductConteiner.css';
+
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveItemType, itemsSelector } from "../../../features/items";
 
 function MainConteiner(props) {
 
     const { error, loading, startIndex, endIndex, items } = props
+
+    const dispatch = useDispatch();
+
+    const { activeItemType } = useSelector(itemsSelector);
+
+    const handleClick = (clickedItem) => {
+        dispatch(setActiveItemType(clickedItem))
+    }
 
     const renderItems = () => {
         var result = null;
@@ -20,14 +31,18 @@ function MainConteiner(props) {
         return result;
     };
 
+    const renderItemTypes = () => {
+        let itemTypes = ["mug", "shirt"]
+        return itemTypes.map((itemType) => <ItemType isActive={activeItemType === itemType} type={itemType} onClick={(clickedItem) => handleClick(clickedItem)} />)
+    };
+
     return (
         <div className="ProductContainer">
             <div>
                 <p>Products</p>
             </div>
-            <div className='TagContainer'>
-                <Tag />
-                <Tag />
+            <div className='ItemTypeContainer'>
+                {renderItemTypes()}
             </div>
             <div className='ProductContentContainer'>
                 {renderItems()}

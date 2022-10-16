@@ -14,6 +14,7 @@ function Product(props) {
         <div className="ProductBox">
             <div className='ImageBox'>
                 <div className='InnerImageBox'>
+                    <img src='https://picsum.photos/92'></img>
                 </div>
             </div>
             <div className='Salary'>

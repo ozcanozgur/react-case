@@ -1,3 +1,30 @@
 body {
+  min-width: 1210px;
   background-color: #E5E5E5;
+}
+
+.AppContainer {
+  display: flex;
+  margin-top: 41px;
+  max-width: 1232px;
+  max-height: 1096px
+}
+
+.PaginationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  background-color: red;
+}
+
+.Footer {
+  margin-top: 136px;
+  margin-bottom: 50px;
+  display: flex;
+  gap: 16px;
+  color: #1ea3ce;
+  font-size: 13px;
+  font-family: 'Open Sans';
+  line-height: 22.62px;
 }

@@ -19,6 +19,11 @@
     background-color: #C4C4C4;
 }
 
+.ImageBox img {
+    height: 92px;
+    width: 92px;
+}
+
 .Salary {
     margin-top: 8px;
     width: 124px;
