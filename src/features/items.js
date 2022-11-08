@@ -92,6 +92,11 @@ const itemSlice = createSlice({
             state.selectedTags = payload
         },
         setSelectedBrands: (state, { payload }) => {
+            if (payload.length === 0) {
+                state.selectedBrands = ["All"];
+                return;
+            }
+
             if (payload.includes("All") && payload.length > 1) {
                 payload.splice(payload.indexOf("All"), 1);
             }
@@ -148,7 +153,7 @@ export const itemsSelector = (state) => state.items;
 export default itemSlice.reducer;
 
 const api = axios.create({
-    baseURL: "https://getir-fake-server-app.herokuapp.com/",
+    baseURL: "https://fake-server-react-demo.herokuapp.com/",
     withCredentials: false,
     headers: {
         Accept: "application/json",
@@ -178,7 +183,7 @@ export function fetchItems(sortingBy, selectedTags, selectedBrands, activeItemTy
             break;
     }
 
-    let url = 'https://getir-fake-server-app.herokuapp.com/' + `items?_sort=${sort}&_order=${order}&itemType=${activeItemType}`;
+    let url = `items?_sort=${sort}&_order=${order}&itemType=${activeItemType}`;
 
     if (selectedBrands[0] !== "All") {
         tags = "&manufacturer_like="
